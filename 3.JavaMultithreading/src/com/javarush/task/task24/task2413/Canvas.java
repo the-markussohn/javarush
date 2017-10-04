@@ -38,7 +38,7 @@ public class Canvas {
         this.matrix = matrix;
     }
 
-    void setPoint(double x, double y, char c) {
+    public void setPoint(double x, double y, char c) {
         if (x < 0 || y < 0 || y > matrix.length || x > matrix[0].length)
             return;
         int roundX = (int) Math.round(x);
@@ -46,13 +46,26 @@ public class Canvas {
         matrix[roundY][roundX] = c;
     }
 
-    void drawMatrix(double x, double y, int[][] matrix, char c) {
+    public void drawMatrix(double x, double y, int[][] matrix, char c) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] != 0) {
                     setPoint(x + j, y + i, c);
                 }
             }
+        }
+    }
+
+    public void clear() {
+        this.matrix = new char[height + 2][width + 2];
+    }
+
+    public void print() {
+        for (char[] chars : matrix) {
+            for (char aChar : chars) {
+                System.out.print(aChar);
+            }
+            System.out.println("");
         }
     }
 }
