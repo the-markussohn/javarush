@@ -26,11 +26,19 @@ public class Ball extends BaseObject {
         return dy;
     }
 
+    public void setDirection(double direction) {
+        this.direction = direction;
+        double angle = Math.toRadians(direction);
+        dx = Math.cos(angle) * speed;
+        dy = -Math.sin(angle) * speed;
+    }
+
     public Ball(double x, double y, double speed, double direction) {
         super(x, y, 1);
         this.speed = speed;
         this.direction = direction;
         this.isFrozen = true;
+
     }
 
     @Override
@@ -48,5 +56,9 @@ public class Ball extends BaseObject {
 
     public void start() {
         isFrozen = false;
+    }
+
+    void checkRebound(int minx, int maxx, int miny, int maxy){
+
     }
 }
