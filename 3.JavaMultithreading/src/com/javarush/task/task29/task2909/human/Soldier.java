@@ -15,4 +15,5 @@ public class Soldier extends Human {
     public void live() {
         fight();
     }
+
 }

@@ -1,10 +1,9 @@
 package com.javarush.task.task29.task2909.human;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Student extends Human {
+    private int course;
     private double averageGrade;
     private String university;
     private Date beginningOfSession;
@@ -63,5 +62,9 @@ public class Student extends Human {
 
     public double getAverageGrade() {
         return averageGrade;
+    }
+
+    public int getCourse() {
+        return course;
     }
 }
