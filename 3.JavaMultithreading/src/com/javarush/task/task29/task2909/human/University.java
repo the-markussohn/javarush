@@ -38,17 +38,36 @@ public class University {
         this.students = students;
     }
 
-    public Student getStudentWithAverageGrade() {
-        //TODO:
+    public Student getStudentWithAverageGrade(double averageGrade) {
+        for (Student student : students) {
+            if (student.getAverageGrade() == averageGrade) {
+                return student;
+            }
+        }
         return null;
     }
 
-    public Student getStudentWithMaxAverageGrade(double averageGrade) {
-        //TODO:
-        return null;
+    public Student getStudentWithMaxAverageGrade() {
+        Student withMaxAverage = students.get(0);
+        for (Student student : students) {
+            if (student.getAverageGrade() > withMaxAverage.getAverageGrade()) {
+                withMaxAverage = student;
+            }
+        }
+        return withMaxAverage;
     }
 
-    public void getStudentWithMinAverageGradeAndExpel() {
-        //TODO:
+    public Student getStudentWithMinAverageGrade() {
+        Student withMinAverage = students.get(0);
+        for (Student student : students) {
+            if (student.getAverageGrade() < withMinAverage.getAverageGrade()) {
+                withMinAverage = student;
+            }
+        }
+        return withMinAverage;
+    }
+
+    public void expel(Student student) {
+        students.remove(student);
     }
 }
