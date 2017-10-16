@@ -76,6 +76,25 @@ public class Client {
     }
 
     public class SocketThread extends Thread {
+
+        protected void processIncomingMessage(String message) {
+            ConsoleHelper.writeMessage(message);
+        }
+
+        protected void informAboutAddingNewUser(String userName) {
+            ConsoleHelper.writeMessage(userName + " joined the chat room");
+        }
+
+        protected void informAboutDeletingNewUser(String userName) {
+            ConsoleHelper.writeMessage(userName + "disconnected");
+        }
+
+        protected void notifyConnectionStatusChanged(boolean clientConnected) {
+            synchronized (Client.this) {
+                Client.this.clientConnected = clientConnected;
+                Client.this.notify();
+            }
+        }
     }
 
 }
