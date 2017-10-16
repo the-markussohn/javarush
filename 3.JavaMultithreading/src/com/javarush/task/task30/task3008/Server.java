@@ -15,7 +15,7 @@ public class Server {
     public static void main(String[] args) throws IOException {
         int port = ConsoleHelper.readInt();
         ServerSocket socket = new ServerSocket(port);
-        ConsoleHelper.writeMessage("Listening on port" + socket.getLocalPort());
+        ConsoleHelper.writeMessage("Listening on port " + socket.getLocalPort());
         try {
             while (true) {
                 Socket accept = socket.accept();
@@ -43,6 +43,28 @@ public class Server {
 
         public Handler(Socket socket) {
             this.socket = socket;
+        }
+
+        @Override
+        public void run() {
+            ConsoleHelper.writeMessage("Connection established on " + socket.getRemoteSocketAddress());
+            String userName = null;
+            try (Connection connection = new Connection(socket)) {
+                userName = serverHandshake(connection);
+                sendBroadcastMessage(new Message(MessageType.USER_ADDED, userName));
+                sendListOfUsers(connection, userName);
+                serverMainLoop(connection, userName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                if (userName != null) {
+                    connectionMap.remove(userName);
+                    sendBroadcastMessage(new Message(MessageType.USER_REMOVED, userName));
+                }
+                ConsoleHelper.writeMessage("Connection closed on port " + socket.getRemoteSocketAddress());
+            }
         }
 
         private String serverHandshake(Connection connection) throws IOException, ClassNotFoundException {
